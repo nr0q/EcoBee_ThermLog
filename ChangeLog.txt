@@ -1,0 +1,22 @@
+    //
+    // ThermLog
+    // By Matthew A. Chambers
+    // Copyright 2017 Matthew A. Chambers
+    // License under GNU Public License V3.0 https://www.gnu.org/licenses/gpl-3.0.txt
+    //
+    // This program takes data from the EcoBee 3 smart thermostat saved in CSV format
+    // and generates an information webpage displaying data in human readable form
+    //
+
+v0.3
+
+
+v0.2
+-Added KoolPHPSuite library for richer UI experience
+-Added ability to select what day to view using KoolPHPSuite's KoolCalendar widget
+-Cleaned up table, hid columns that did not contain useful data
+-Changed column header labels and made over-rides to show 1|0 as Yes|No and cleaned up Heat On|Off and Cool On|Off data
+
+v0.1
+-Pilot version, basic functionality
+-Ability to parse CSV data into a table
