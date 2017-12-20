@@ -281,8 +281,8 @@
         $series = new LineSeries();
         $series->Name = "Cool Set Temp";
         $series->Appearance->BackgroundColor="#006699";
-        $series->TooltipsAppearance->DataFormatString = "{0}&deg;F";
-        $series->LabelsAppearance->DataFormatString = "{0}&deg;F";
+        $series->TooltipsAppearance->DataFormatString = "{0}°F";
+        $series->LabelsAppearance->DataFormatString = "{0}°F";
         $series->LabelsAppearance->Position = "Above";
         $series->LabelsAppearance->Visible = FALSE;
         $series->MarkersAppearance->MarkersType = "Circle";
@@ -292,8 +292,8 @@
         $series = new LineSeries();
         $series->Name = "Heat Set Temp";
         $series->Appearance->BackgroundColor="#990000";
-        $series->TooltipsAppearance->DataFormatString = "{0}&deg;F";
-        $series->LabelsAppearance->DataFormatString = "{0}&deg;F";
+        $series->TooltipsAppearance->DataFormatString = "{0}°F";
+        $series->LabelsAppearance->DataFormatString = "{0}°F";
         $series->LabelsAppearance->Position = "Above";
         $series->LabelsAppearance->Visible = FALSE;
         $series->ArrayData($HeatSet);
@@ -302,8 +302,8 @@
         $series = new LineSeries();
         $series->Name = "Current Temp";
         $series->Appearance->BackgroundColor="#999999";
-        $series->TooltipsAppearance->DataFormatString = "{0}&deg;F";
-        $series->LabelsAppearance->DataFormatString = "{0}&deg;F";
+        $series->TooltipsAppearance->DataFormatString = "{0}°F";
+        $series->LabelsAppearance->DataFormatString = "{0}°F";
         $series->LabelsAppearance->Position = "Above";
         $series->LabelsAppearance->Visible = FALSE;
         $series->ArrayData($CurTemp);
@@ -312,8 +312,8 @@
         $series = new LineSeries();
         $series->Name = "Outdoor Temp";
         $series->Appearance->BackgroundColor="#009900";
-        $series->TooltipsAppearance->DataFormatString = "{0}&deg;F";
-        $series->LabelsAppearance->DataFormatString = "{0}&deg;F";
+        $series->TooltipsAppearance->DataFormatString = "{0}°F";
+        $series->LabelsAppearance->DataFormatString = "{0}°F";
         $series->LabelsAppearance->Position = "Above";
         $series->LabelsAppearance->Visible = FALSE;
         $series->ArrayData($OutTemp);
@@ -322,8 +322,8 @@
         $series = new LineSeries();
         $series->Name = "Living Room";
         $series->Appearance->BackgroundColor="#444444";
-        $series->TooltipsAppearance->DataFormatString = "{0}&deg;F";
-        $series->LabelsAppearance->DataFormatString = "{0}&deg;F";
+        $series->TooltipsAppearance->DataFormatString = "{0}°F";
+        $series->LabelsAppearance->DataFormatString = "{0}°F";
         $series->LabelsAppearance->Position = "Above";
         $series->LabelsAppearance->Visible = FALSE;
         $series->ArrayData($LvRmTemp);
@@ -332,8 +332,8 @@
         $series = new LineSeries();
         $series->Name = "Bath Room";
         $series->Appearance->BackgroundColor="#444444";
-        $series->TooltipsAppearance->DataFormatString = "{0}&deg;F";
-        $series->LabelsAppearance->DataFormatString = "{0}&deg;F";
+        $series->TooltipsAppearance->DataFormatString = "{0}°F";
+        $series->LabelsAppearance->DataFormatString = "{0}°F";
         $series->LabelsAppearance->Position = "Above";
         $series->LabelsAppearance->Visible = FALSE;
         $series->ArrayData($BathTemp);
