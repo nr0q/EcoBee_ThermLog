@@ -22,6 +22,7 @@
 <html lang="EN">
 <head>
 <title><?php echo $PAGE_TITLE; ?></title>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 </head>
 <body class="mainPage">
 
@@ -56,7 +57,7 @@
 <form id="form1" method="post">
 <?php
     echo "<div style='padding-top:10px;padding-bottom:10px;width:650px";
-    if ($style_select=='black'){echo "background:#333'";}
+    //if ($style_select=='black'){echo "background:#333'";}
     echo $cal->Render();
 ?>
 
@@ -69,7 +70,7 @@
     {
         echo "<b>Selected Date:</b>";
         echo " [".date("Y-m-d",$cal->SelectedDates[0])."] ";
-        $selectedDate=date("Y-m-d",$cal->SelectedDates[0]);
+        $SelectedDate=date("Y-m-d",$cal->SelectedDates[0]);
     }
     ?>
 </div>
@@ -88,14 +89,13 @@
     $BathTemp = array();
     
     $row = 1;
-    $idx = 0;
-    if ($selectedDate==null)
+    if ($SelectedDate==null)
     {
         echo "Choose date above.";
     }
     else
     {
-    if (($handle = fopen("$DATA_DIR/report-$THERMOSTAT_ID-$selectedDate.csv", "r")) !== FALSE)
+    if (($handle = fopen("$DATA_DIR/report-$THERMOSTAT_ID-$SelectedDate.csv", "r")) !== FALSE)
     {
         echo "\n\n<table border=1>\n";
         while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
@@ -155,42 +155,6 @@
                                 else
                                 {
                                     echo "<td>" . $data[$c] . "</td>\n";
-                                    if ($c == 1)
-                                    {
-                                        $DayTime[$idx] = $data[$c];
-                                    }
-                                    elseif ($c == 6)
-                                    {
-                                        $CoolSet[$idx] = $data[$c];
-                                    }
-                                    elseif ($c == 7)
-                                    {
-                                        $HeatSet[$idx] = $data[$c];
-                                    }
-                                    elseif ($c == 8)
-                                    {
-                                        $CurTemp[$idx] = $data[$c];
-                                    }
-                                    elseif ($c == 9)
-                                    {
-                                        $CurHumd[$idx] = $data[$c];
-                                    }
-                                    elseif ($c == 10)
-                                    {
-                                        $OutTemp[$idx] = $data[$c];
-                                    }
-                                    elseif ($c == 11)
-                                    {
-                                        $WindSpd[$idx] = $data[$c];
-                                    }
-                                    elseif ($c == 16)
-                                    {
-                                        $LvRmTemp[$idx] = $data[$c];
-                                    }
-                                    elseif ($c == 19)
-                                    {
-                                        $BathTemp[$idx] = $data[$c];
-                                    }
                                 }
                             }
                             elseif ($c == 20)
@@ -215,6 +179,45 @@
                             else
                             {
                                 echo "<td>" . $data[$c] . "</td>\n";
+                            }
+                            if (substr($data[1],3,2) == "00")
+                            {
+                                if ($c == 1)
+                                {
+                                    $DayTime[] = $data[$c];
+                                }
+                                elseif ($c == 6)
+                                {
+                                    $CoolSet[] = $data[$c];
+                                }
+                                elseif ($c == 7)
+                                {
+                                    $HeatSet[] = $data[$c];
+                                }
+                                elseif ($c == 8)
+                                {
+                                    $CurTemp[] = $data[$c];
+                                }
+                                elseif ($c == 9)
+                                {
+                                    $CurHumd[] = $data[$c];
+                                }
+                                elseif ($c == 10)
+                                {
+                                    $OutTemp[] = $data[$c];
+                                }
+                                elseif ($c == 11)
+                                {
+                                    $WindSpd[] = $data[$c];
+                                }
+                                elseif ($c == 16)
+                                {
+                                    $LvRmTemp[] = $data[$c];
+                                }
+                                elseif ($c == 19)
+                                {
+                                    $BathTemp[] = $data[$c];
+                                }
                             }
                         }
                         elseif ($row == 6)
@@ -253,7 +256,6 @@
                 echo "</tr>\n";
             }
             $row++;
-            $idx++;
         }
         fclose($handle);
         echo "</table>\n";
@@ -267,6 +269,7 @@
         
         $chart->Title->Text = "HVAC Performance";
         $chart->PlotArea->XAxis->Title = "Time";
+        $chart->PlotArea->XAxis->LabelsAppearance->RotationAngle = 45;
         $chart->PlotArea->XAxis->Set($DayTime);
         $chart->PlotArea->YAxis->Title = "Temp";
         $chart->PlotArea->YAxis->MaxValue = 100;
@@ -276,58 +279,64 @@
         $chart->PlotArea->YAxis->LabelsAppearance->DataFormatString = "{0}";
         
         $series = new LineSeries();
-        $series->Name = "Cool Set Temp (F)";
+        $series->Name = "Cool Set Temp";
         $series->Appearance->BackgroundColor="#006699";
-        $series->TooltipsAppearance->DataFormatString = "{0}";
-        $series->LabelsAppearance->DataFormatString = "{0}";
+        $series->TooltipsAppearance->DataFormatString = "{0}&deg;F";
+        $series->LabelsAppearance->DataFormatString = "{0}&deg;F";
         $series->LabelsAppearance->Position = "Above";
+        $series->LabelsAppearance->Visible = FALSE;
         $series->MarkersAppearance->MarkersType = "Circle";
-        $series->ArrayData=$CoolSet;
+        $series->ArrayData($CoolSet);
         $chart->PlotArea->AddSeries($series);
         
         $series = new LineSeries();
-        $series->Name = "Heat Set Temp (F)";
+        $series->Name = "Heat Set Temp";
         $series->Appearance->BackgroundColor="#990000";
-        $series->TooltipsAppearance->DataFormatString = "{0}";
-        $series->LabelsAppearance->DataFormatString = "{0}";
+        $series->TooltipsAppearance->DataFormatString = "{0}&deg;F";
+        $series->LabelsAppearance->DataFormatString = "{0}&deg;F";
         $series->LabelsAppearance->Position = "Above";
-        $series->ArrayData=$HeatSet;
+        $series->LabelsAppearance->Visible = FALSE;
+        $series->ArrayData($HeatSet);
         $chart->PlotArea->AddSeries($series);
         
         $series = new LineSeries();
-        $series->Name = "Current Temp (F)";
+        $series->Name = "Current Temp";
         $series->Appearance->BackgroundColor="#999999";
-        $series->TooltipsAppearance->DataFormatString = "{0}";
-        $series->LabelsAppearance->DataFormatString = "{0}";
+        $series->TooltipsAppearance->DataFormatString = "{0}&deg;F";
+        $series->LabelsAppearance->DataFormatString = "{0}&deg;F";
         $series->LabelsAppearance->Position = "Above";
-        $series->ArrayData=$CurTemp;
+        $series->LabelsAppearance->Visible = FALSE;
+        $series->ArrayData($CurTemp);
         $chart->PlotArea->AddSeries($series);
         
         $series = new LineSeries();
-        $series->Name = "Outdoor Temp (F)";
+        $series->Name = "Outdoor Temp";
         $series->Appearance->BackgroundColor="#009900";
-        $series->TooltipsAppearance->DataFormatString = "{0}";
-        $series->LabelsAppearance->DataFormatString = "{0}";
+        $series->TooltipsAppearance->DataFormatString = "{0}&deg;F";
+        $series->LabelsAppearance->DataFormatString = "{0}&deg;F";
         $series->LabelsAppearance->Position = "Above";
-        $series->ArrayData=$OutTemp;
+        $series->LabelsAppearance->Visible = FALSE;
+        $series->ArrayData($OutTemp);
         $chart->PlotArea->AddSeries($series);
         
         $series = new LineSeries();
-        $series->Name = "Living Room (F)";
+        $series->Name = "Living Room";
         $series->Appearance->BackgroundColor="#444444";
-        $series->TooltipsAppearance->DataFormatString = "{0}";
-        $series->LabelsAppearance->DataFormatString = "{0}";
+        $series->TooltipsAppearance->DataFormatString = "{0}&deg;F";
+        $series->LabelsAppearance->DataFormatString = "{0}&deg;F";
         $series->LabelsAppearance->Position = "Above";
-        $series->ArrayData=$LvRmTemp;
+        $series->LabelsAppearance->Visible = FALSE;
+        $series->ArrayData($LvRmTemp);
         $chart->PlotArea->AddSeries($series);
         
         $series = new LineSeries();
-        $series->Name = "Bath Room (F)";
+        $series->Name = "Bath Room";
         $series->Appearance->BackgroundColor="#444444";
-        $series->TooltipsAppearance->DataFormatString = "{0}";
-        $series->LabelsAppearance->DataFormatString = "{0}";
+        $series->TooltipsAppearance->DataFormatString = "{0}&deg;F";
+        $series->LabelsAppearance->DataFormatString = "{0}&deg;F";
         $series->LabelsAppearance->Position = "Above";
-        $series->ArrayData=$BathTemp;
+        $series->LabelsAppearance->Visible = FALSE;
+        $series->ArrayData($BathTemp);
         $chart->PlotArea->AddSeries($series);
         
         ?>
@@ -343,6 +352,13 @@
         echo "Error: Data not available";
     }
     }
+    /*
+    echo count($CoolSet);
+    for ($i=0; $i < count($CoolSet); $i++)
+    {
+        echo $CoolSet[$i];
+    }
+    */
 ?>
 </body>
 </html>
