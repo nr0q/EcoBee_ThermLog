@@ -9,7 +9,7 @@
     //
 
 v0.3
-
+-Added visual chart of various temperature data series using KoolCharts
 
 v0.2
 -Added KoolPHPSuite library for richer UI experience
