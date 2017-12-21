@@ -8,6 +8,9 @@
     // and generates an information webpage displaying data in human readable form
     //
 
+v0.4
+-Added buttons to hide and show calendar, table and chart
+
 v0.3
 -Added visual chart of various temperature data series using KoolCharts
 
